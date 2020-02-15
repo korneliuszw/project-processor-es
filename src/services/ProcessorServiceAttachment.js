@@ -40,7 +40,7 @@ function createSchema () {
     category: Joi.string().optional().allow(null).allow(''),
     size: Joi.number().optional().allow(null),
     type: Joi.string().valid('link', 'file'),
-    contentType: Joi.string().when('type', {is: 'file', then: Joi.required()}),
+    contentType: Joi.string().when('type', { is: 'file', then: Joi.required(), otherwise: Joi.allow(null).optional() }),
     path: Joi.string().required()
   })
 }
