@@ -39,8 +39,9 @@ function createSchema () {
   return updateSchema().keys({
     category: Joi.string().optional().allow(null).allow(''),
     size: Joi.number().optional().allow(null),
-    contentType: Joi.string().required(),
-    filePath: Joi.string().required()
+    type: Joi.string().valid('link', 'file'),
+    contentType: Joi.string().when('type', {is: 'file', then: Joi.required()}),
+    path: Joi.string().required()
   })
 }
 

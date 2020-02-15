@@ -56,7 +56,13 @@ function getRequestBody (indexName) {
           description: {
             type: 'string'
           },
-          filePath: {
+          type: {
+            type: 'string'
+          },
+          tags: {
+            type: 'string'
+          },
+          path: {
             type: 'string'
           },
           id: {

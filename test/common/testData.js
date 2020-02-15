@@ -17,9 +17,10 @@ const projectCreatedMessage = require('../data/project/project.action.create.jso
 const projectUpdatedMessage = require('../data/project/project.action.update.json')
 const projectDeletedMessage = require('../data/project/project.action.delete.json')
 
-const attachmentCreatedMessage = require('../data/attachment/project.action.create.json')
-const attachmentUpdatedMessage = require('../data/attachment/project.action.update.json')
-const attachmentDeletedMessage = require('../data/attachment/project.action.delete.json')
+const fileCreatedMessage = require('../data/attachment/project.action.create.json')
+const linkCreatedMessage = require('../data/attachment/project.action.create-link.json')
+const fileUpdatedMessage = require('../data/attachment/project.action.update.json')
+const fileDeletedMessage = require('../data/attachment/project.action.delete.json')
 
 const timelineCreatedMessage = require('../data/timeline/project.action.create.json')
 const timelineUpdatedMessage = require('../data/timeline/project.action.update.json')
@@ -118,7 +119,7 @@ const productCategoryDeletedMessage = require('../data/product.category/project.
 
 const projectId = projectCreatedMessage.payload.id
 const timelineId = timelineCreatedMessage.payload.id
-const attachmentId = attachmentCreatedMessage.payload.id
+const attachmentId = fileCreatedMessage.payload.id
 const milestoneId = milestoneCreatedMessage.payload.id
 const milestoneTemplateId = milestoneTemplateCreatedMessage.payload.id
 const phaseId = phaseCreatedMessage.payload.id
@@ -238,9 +239,10 @@ module.exports = {
   projectCreatedMessage,
   projectUpdatedMessage,
   projectDeletedMessage,
-  attachmentCreatedMessage,
-  attachmentUpdatedMessage,
-  attachmentDeletedMessage,
+  fileCreatedMessage,
+  linkCreatedMessage,
+  fileUpdatedMessage,
+  fileDeletedMessage,
   timelineCreatedMessage,
   timelineUpdatedMessage,
   timelineDeletedMessage

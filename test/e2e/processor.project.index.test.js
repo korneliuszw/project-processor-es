@@ -35,9 +35,10 @@ const {
   projectUpdatedMessage,
   projectCreatedMessage,
   projectDeletedMessage,
-  attachmentCreatedMessage,
-  attachmentUpdatedMessage,
-  attachmentDeletedMessage
+  fileCreatedMessage,
+  linkCreatedMessage,
+  fileUpdatedMessage,
+  fileDeletedMessage
 } = require('../common/testData')
 
 describe('TC Validate Topic Tests', () => {
@@ -647,38 +648,44 @@ describe('TC Attachment Topic Tests', () => {
     await ProcessorService.deleteMessage(projectDeletedMessage)
   })
 
-  it('create attachment message', async () => {
-    await ProcessorService.create(attachmentCreatedMessage)
+  it('create file message', async () => {
+    await ProcessorService.create(fileCreatedMessage)
     const data = await testHelper.getProjectESData(projectId)
-    testHelper.expectObj(_.find(data.attachments, { id: attachmentId }), attachmentCreatedMessage.payload,
-      _.keys(_.omit(attachmentCreatedMessage.payload, ['resource'])))
+    testHelper.expectObj(_.find(data.attachments, { id: attachmentId }), fileCreatedMessage.payload,
+      _.keys(_.omit(fileCreatedMessage.payload, ['resource'])))
     logger.logFullError(null)
   })
 
-  it('create attachment message - already exists', async () => {
-    await ProcessorService.create(attachmentCreatedMessage)
+  it('create file message - already exists', async () => {
+    await ProcessorService.create(fileCreatedMessage)
     const data = await testHelper.getProjectESData(projectId)
-    testHelper.expectObj(_.find(data.attachments, { id: attachmentId }), attachmentCreatedMessage.payload,
-      _.keys(_.omit(attachmentCreatedMessage.payload, ['resource'])))
+    testHelper.expectObj(_.find(data.attachments, { id: attachmentId }), fileCreatedMessage.payload,
+      _.keys(_.omit(fileCreatedMessage.payload, ['resource'])))
+  })
+  it('create link message', async () => {
+    await ProcessorService.create(linkCreatedMessage)
+    const data = await testHelper.getProjectESData(projectId)
+    testHelper.expectObj(_.find(data.attachments, { id: attachmentId }), linkCreatedMessage.payload,
+      _.keys(_.omit(linkCreatedMessage.payload, ['resource'])))
+    logger.logFullError(null)
+  })
+  it('update file message', async () => {
+    await ProcessorService.update(fileUpdatedMessage)
+    const data = await testHelper.getProjectESData(projectId)
+    testHelper.expectObj(_.find(data.attachments, { id: attachmentId }), fileUpdatedMessage.payload,
+      _.keys(_.omit(fileUpdatedMessage.payload, ['resource'])))
   })
 
-  it('update attachment message', async () => {
-    await ProcessorService.update(attachmentUpdatedMessage)
-    const data = await testHelper.getProjectESData(projectId)
-    testHelper.expectObj(_.find(data.attachments, { id: attachmentId }), attachmentUpdatedMessage.payload,
-      _.keys(_.omit(attachmentUpdatedMessage.payload, ['resource'])))
-  })
-
-  it('update attachment message - not found', async () => {
-    const message = _.cloneDeep(attachmentUpdatedMessage)
+  it('update file message - not found', async () => {
+    const message = _.cloneDeep(fileUpdatedMessage)
     message.payload.id = notFoundId
     await ProcessorService.update(message)
     const data = await testHelper.getProjectESData(projectId)
     expect(_.find(data.attachments, { id: notFoundId })).to.be.an('undefined')
   })
 
-  it('delete attachment message', async () => {
-    await ProcessorService.deleteMessage(attachmentDeletedMessage)
+  it('delete file message', async () => {
+    await ProcessorService.deleteMessage(fileDeletedMessage)
     const data = await testHelper.getProjectESData(projectId)
     expect(_.find(data.attachments, { id: attachmentId })).to.be.an('undefined')
   })
